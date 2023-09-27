@@ -1,2 +1,5 @@
-Flask==2.0.2
+Flask==2.3.3
 gunicorn
+azure-monitor-opentelemetry
+opentelemetry-instrumentation-flask
+openai
