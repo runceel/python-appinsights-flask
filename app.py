@@ -34,17 +34,17 @@ def favicon():
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/hello', methods=['POST'])
-def hello():
+async def hello():
    name = request.form.get('name')
 
    if name:
        app.logger.info('Request for hello page received with name=%s' % name)
-       return render_template('hello.html', name = name, message = generateMessage(name))
+       return render_template('hello.html', name = name, message = await generateMessage(name))
    else:
        app.logger.info('Request for hello page received with no name or blank name -- redirecting')
        return redirect(url_for('index'))
 
-def generateMessage(name):
+async def generateMessage(name):
     with tracer.start_as_current_span("generateMessage") as span:
         try:
             messages = [
@@ -52,7 +52,7 @@ def generateMessage(name):
                 {"role": "user", "content": "Hi, my name is %s." % name },
             ]
             app.logger.info("Generating message for %s. Messages is %s" % (name, json.dumps(messages)))
-            response = openai.ChatCompletion.create(
+            response = await openai.ChatCompletion.acreate(
                 deployment_id="gpt-35-turbo",
                 messages=messages,
                 max_tokens=500,
