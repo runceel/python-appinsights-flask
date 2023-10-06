@@ -1,5 +1,7 @@
 Flask==2.3.3
+Werkzeug==2.2.2
 gunicorn
 azure-monitor-opentelemetry
 opentelemetry-instrumentation-flask
 openai
+azure.identity
